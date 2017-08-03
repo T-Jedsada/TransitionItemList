@@ -12,7 +12,6 @@ import kotlinx.android.synthetic.main.activity_main.*
 import org.parceler.Parcels
 import java.util.concurrent.TimeUnit
 
-
 class MainActivity : AppCompatActivity(), MovieAdapter.MovieAdapterListener {
 
     private var movieAdapter: MovieAdapter = MovieAdapter()
