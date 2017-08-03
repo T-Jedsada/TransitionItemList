@@ -2,10 +2,7 @@ package com.jedsada.transitionitemlist.adapter
 
 import android.support.v7.widget.RecyclerView
 import android.view.ViewGroup
-import com.jedsada.transitionitemlist.MovieDao
-import com.jedsada.transitionitemlist.R
-import com.jedsada.transitionitemlist.ResultDetail
-import com.jedsada.transitionitemlist.inflate
+import com.jedsada.transitionitemlist.*
 
 class MovieAdapter : RecyclerView.Adapter<MovieViewHolder>(), MovieViewHolder.MovieViewHolderListener {
 
@@ -13,7 +10,7 @@ class MovieAdapter : RecyclerView.Adapter<MovieViewHolder>(), MovieViewHolder.Mo
     private var listener: MovieAdapterListener? = null
 
     interface MovieAdapterListener {
-        fun navigateToDetailItem(data: ResultDetail?)
+        fun navigateToDetailItem(data: ResultDetail?, img: CustomOneOneImageView)
     }
 
     fun setData(movies: MovieDao) {
@@ -35,7 +32,7 @@ class MovieAdapter : RecyclerView.Adapter<MovieViewHolder>(), MovieViewHolder.Mo
 
     override fun getItemCount(): Int = list.size
 
-    override fun onMovieClick(position: Int) {
-        listener?.navigateToDetailItem(list[position])
+    override fun onMovieClick(position: Int, img: CustomOneOneImageView) {
+        listener?.navigateToDetailItem(list[position], img)
     }
 }

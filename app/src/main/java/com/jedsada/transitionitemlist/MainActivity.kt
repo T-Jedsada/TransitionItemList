@@ -1,6 +1,8 @@
 package com.jedsada.transitionitemlist
 
 import android.os.Bundle
+import android.support.v4.app.ActivityOptionsCompat
+import android.support.v4.view.ViewCompat
 import android.support.v7.app.AppCompatActivity
 import com.jedsada.transitionitemlist.adapter.MovieAdapter
 import io.reactivex.Observable
@@ -9,6 +11,7 @@ import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_main.*
 import org.parceler.Parcels
 import java.util.concurrent.TimeUnit
+
 
 class MainActivity : AppCompatActivity(), MovieAdapter.MovieAdapterListener {
 
@@ -31,9 +34,12 @@ class MainActivity : AppCompatActivity(), MovieAdapter.MovieAdapterListener {
                 }
     }
 
-    override fun navigateToDetailItem(data: ResultDetail?) {
-        navigate<DetailActivity> {
+    override fun navigateToDetailItem(data: ResultDetail?, img: CustomOneOneImageView) {
+        val options = ActivityOptionsCompat.makeSceneTransitionAnimation(
+                this, img, ViewCompat.getTransitionName(img))
+        navigate<DetailActivity>(options) {
             putExtra("data", Parcels.wrap(data))
+            putExtra("img", ViewCompat.getTransitionName(img))
         }
     }
 }
