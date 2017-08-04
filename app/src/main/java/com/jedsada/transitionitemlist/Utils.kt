@@ -60,13 +60,9 @@ fun ImageView.loadImage(url: String?): Target<Drawable> = let {
     Glide.with(this).load(url).thumbnail(0.1f).into(it)
 }
 
-fun View.hide() {
-    this.visibility = View.GONE
-}
+fun View.hide() = let { this.visibility = View.GONE }
 
-fun View.show() {
-    this.visibility = View.VISIBLE
-}
+fun View.show() = let { this.visibility = View.VISIBLE }
 
 inline fun <reified T : Activity> Activity.navigate(options: ActivityOptionsCompat?, func: Intent.() -> Unit) {
     val intent = Intent(this, T::class.java)

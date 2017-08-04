@@ -1,14 +1,16 @@
-package com.jedsada.transitionitemlist
+package com.jedsada.transitionitemlist.main
 
 import android.os.Bundle
 import android.support.v4.app.ActivityOptionsCompat
 import android.support.v4.view.ViewCompat
 import android.support.v7.app.AppCompatActivity
+import com.jedsada.transitionitemlist.*
 import com.jedsada.transitionitemlist.adapter.MovieAdapter
+import com.jedsada.transitionitemlist.detail.DetailActivity
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
-import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.fragment_main.*
 import org.parceler.Parcels
 import java.util.concurrent.TimeUnit
 
