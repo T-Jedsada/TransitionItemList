@@ -14,7 +14,7 @@ import kotlinx.android.synthetic.main.fragment_main.*
 import org.parceler.Parcels
 import java.util.concurrent.TimeUnit
 
-class MainActivity : AppCompatActivity(), MovieAdapter.MovieAdapterListener {
+class MainActivity : AppCompatActivity() {
 
     private var movieAdapter: MovieAdapter = MovieAdapter()
 
@@ -23,24 +23,25 @@ class MainActivity : AppCompatActivity(), MovieAdapter.MovieAdapterListener {
         setContentView(R.layout.activity_main)
         val movies = JsonUtil().getJsonToMock("movies.json", MovieDao::class.java)
 
-        list?.setupGridLayout(movieAdapter)
-        movieAdapter.setListener(this)
+        list?.run {
+            setupGridLayout(movieAdapter.apply {
+                movieOnClick = { data, img ->
+                    val options = ActivityOptionsCompat.makeSceneTransitionAnimation(
+                            this@MainActivity, img, ViewCompat.getTransitionName(img))
+                    navigate<DetailActivity>(options) {
+                        putExtra("data", Parcels.wrap(data))
+                        putExtra("img", ViewCompat.getTransitionName(img))
+                    }
+                }
+            })
+        }
 
         Observable.timer(2, TimeUnit.SECONDS)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe {
                     pb.hide()
-                    movieAdapter.setData(movies)
+                    movieAdapter.list = movies.result
                 }
-    }
-
-    override fun navigateToDetailItem(data: ResultDetail?, img: CustomOneOneImageView) {
-        val options = ActivityOptionsCompat.makeSceneTransitionAnimation(
-                this, img, ViewCompat.getTransitionName(img))
-        navigate<DetailActivity>(options) {
-            putExtra("data", Parcels.wrap(data))
-            putExtra("img", ViewCompat.getTransitionName(img))
-        }
     }
 }

@@ -56,8 +56,8 @@ fun ImageView.loadImage(url: String?, func: () -> Unit): Target<Drawable> = let 
     }).into(it)
 }
 
-fun ImageView.loadImage(url: String?): Target<Drawable> = let {
-    Glide.with(this).load(url).thumbnail(0.1f).into(it)
+fun ImageView.loadImage(url: String?) {
+    Glide.with(this).load(url).into(this)
 }
 
 fun View.hide() = let { this.visibility = View.GONE }

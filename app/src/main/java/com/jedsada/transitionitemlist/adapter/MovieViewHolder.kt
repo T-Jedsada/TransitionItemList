@@ -6,26 +6,21 @@ import android.view.View
 import com.jedsada.transitionitemlist.CustomOneOneImageView
 import com.jedsada.transitionitemlist.ResultDetail
 import com.jedsada.transitionitemlist.loadImage
+import kotlinx.android.extensions.LayoutContainer
+import kotlinx.android.synthetic.main.movie_item.*
 import kotlinx.android.synthetic.main.movie_item.view.*
 
-class MovieViewHolder(itemView: View?) : RecyclerView.ViewHolder(itemView) {
+typealias ItemOnClick = (Int, CustomOneOneImageView) -> Unit
 
-    private var listener: MovieViewHolderListener? = null
+class MovieViewHolder(override val containerView: View?) : RecyclerView.ViewHolder(containerView), LayoutContainer {
 
-    interface MovieViewHolderListener {
-        fun onMovieClick(position: Int, img: CustomOneOneImageView)
-    }
-
-    fun setListener(listener: MovieViewHolderListener?) {
-        this.listener = listener
-    }
+    var itemOnClick: ItemOnClick? = null
 
     fun onBindData(data: ResultDetail?) {
         itemView.setOnClickListener {
-            if (adapterPosition != RecyclerView.NO_POSITION)
-                listener?.onMovieClick(adapterPosition, itemView.img)
+            if (adapterPosition != RecyclerView.NO_POSITION) itemOnClick?.invoke(adapterPosition, img)
         }
         ViewCompat.setTransitionName(itemView.img, data?.title)
-        itemView.img.loadImage("http://image.tmdb.org/t/p/w780/${data?.backdropPath}")
+        img.loadImage("http://image.tmdb.org/t/p/w780/${data?.backdropPath}")
     }
 }
